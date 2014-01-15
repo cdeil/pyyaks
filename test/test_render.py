@@ -1,3 +1,5 @@
+from __future__ import print_function, division, absolute_import
+
 import os
 import pyyaks.context as context
 import nose.tools as nt
@@ -30,8 +32,8 @@ def func5(val=None):
 
 def test_render1():
     assert func1('{{sr.a}}', '{{sr.b}}', '{{sr.c}}') == ('a', 'b', 'c')
-    assert func1.func_name == 'func1'
-    assert func1.func_doc == 'Doc string'
+    assert func1.__name__ == 'func1'
+    assert func1.__doc__ == 'Doc string'
 
 def test_render2():
     assert func2('{{sr.a}}', '{{sr.b}}', '{{sr.c}}') == ('a', '{{sr.b}}', '{{sr.c}}')

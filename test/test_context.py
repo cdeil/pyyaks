@@ -1,12 +1,13 @@
+from __future__ import print_function, division, absolute_import
+
 import os
 import tempfile
 import time
 import pyyaks.logger
 import pyyaks.context as context
 import nose.tools as nt
-import StringIO
-
-import cPickle as pickle
+import six
+from six.moves import cPickle as pickle
 
 logger = pyyaks.logger.get_logger()
 
@@ -16,7 +17,7 @@ files = context.ContextDict('files', basedir='pyyaks:data')
 def test_format_filter():
     src['obsid'] = 123
     src['test_format'] = '{{ "%05d"|format(src.obsid.val) }}'
-    print str(src['test_format'])
+    print(str(src['test_format']))
     assert str(src['test_format']) == '00123'
     
 def test_set_by_key():
@@ -42,7 +43,7 @@ def test_nested():
     assert str(src['srcdir']) == 'obs123/nested2'
 
 def test_get_accessor():
-    print files.rel['srcdir']
+    print(files.rel['srcdir'])
     assert files.rel['srcdir'] == 'data/obs123/nested2'
 
 def test_get_attr():
@@ -111,8 +112,8 @@ def test_store_update_context():
     files['evt2'] = 'obs{{ src.obsid }}/{{src.nested}}/acis_evt2'
     src.val.nested = 'nested{{src.ccdid}}'
 
-    tmp = StringIO.StringIO()
-    tmp2 = StringIO.StringIO()
+    tmp = six.StringIO()
+    tmp2 = six.StringIO()
     pickle.dump(src, tmp)
     pickle.dump(files, tmp2)
 
